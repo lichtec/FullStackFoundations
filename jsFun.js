@@ -30,3 +30,46 @@ function test() {
 }
 
 $( document ).ready(test);
+
+var test;
+
+var Shape = function(width, height) {
+    this.width = width;
+    this.height = height;
+    this.type = 'Fill this in';
+};
+
+Shape.prototype.getArea = function() { return 0; };
+Shape.prototype.getType = function() { return 'This is a ' + this.type; };
+
+
+var Rectangle = function(width, height) {
+    Shape.call(this, width, height);
+    this.type = 'Rectangle';
+};
+
+Rectangle.prototype = new Shape();
+Rectangle.prototype.getArea = function() { return (this.width * this.height); };
+
+var Circle = function(width, height) {
+    Shape.call(this, width, height);
+    this.type = 'Circle';
+};
+
+Circle.prototype = new Shape();
+Circle.prototype.getType = function() { return 'I am a ' + this.type + '!'; };
+Circle.prototype.getArea = function() { return (Math.pow(this.width/2, 2) * Math.PI ); };
+
+function test() {
+    
+    var a = new Rectangle(1, 2);
+    
+    alert(a.getType());
+    alert(a.getArea());
+    
+    var b = new Circle(2, 2);
+    
+    alert(b.getType());
+    alert(b.getArea());
+}
+$( document ).ready(test);
