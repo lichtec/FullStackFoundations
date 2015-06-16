@@ -73,3 +73,33 @@ function test() {
     alert(b.getArea());
 }
 $( document ).ready(test);
+
+var test;
+
+/*Thanks belong to James Roberts: http://jamesroberts.name/blog/2010/02/22/string-functions-for-javascript-trim-to-camel-case-to-dashed-and-to-underscore/ */
+
+String.prototype.toCamel = function () {
+    return this.replace(/([-_][a-z])/g, function ($1) {
+        return $1.toUpperCase().replace(/[-_]/, '');
+    });
+};
+
+var snakeKeys = {
+    'image_types': ['jpg', 'jpeg', 'png', 'gif'],
+        'requires_description': false,
+        'the_number_one': 1,
+        'the_string_image': 'image'
+};
+
+var camelCaseResult = {};
+
+function test() {
+
+    var keys = _.keys(snakeKeys);
+    for (var i = 0; i < keys.length; i++) {
+        camelCaseResult[keys[i].toCamel()] = snakeKeys[keys[i]];
+    }
+    return camelCaseResult;
+    //alert(_.pairs(camelCaseResult));
+}
+$(document).ready(test);
