@@ -13,11 +13,12 @@ function getTotal() {
 
     for (var i = 0; i < arguments.length; i++) {
 
-        total = getTotal + arguments[i];
+        total = total + arguments[i];
 
         }
-  return total;
+    return total;
 }
+
 
 /* Problem #2
  *
@@ -33,13 +34,14 @@ var creatures = ['alligator', 'bear', 'cat', 'crocodile', 'beaver', 'ape', 'bee'
 
 // Write your solution to Problem #2 below this
 
-function sortCreatures( creatures ) {
+function sortCreatures() {
     var newArray = [];
     while (creatures.length > 0) {
         letter = creatures[0].substring(0,1);
         newArray.push(_.filter(creatures, function(animal){return animal.substring(0,1) == letter }));
         creatures = _.filter(creatures, function(animal){return animal.substring(0,1) != letter });
     }
+    return newArray;
 }
 
 
@@ -57,15 +59,16 @@ var countTo;
 
 function countTo(limit) {
     for (var i = 1; i <= limit; i++) {
-        if i % 15 == 0:
-            document.write("FizzBuzz")
-        elif x % 3 == 0:
-            document.write("Fizz")
-        elif x % 5 == 0:
-            document.write("Buzz")
-        else:
-            document.write(x)
-    };
+        if (i % 15 === 0) {
+            document.write("FizzBuzz");
+        } else if (i % 3 === 0) {
+            document.write("Fizz");
+        } else if (i % 5 === 0) {
+            document.write("Buzz");
+        } else {
+            document.write(i);
+        }
+    }
 }
 
 /* Problem #4
@@ -171,7 +174,7 @@ var camelCaseResult = {};
 
 // Write your solution to Problem #6 below this
 
-/*Thanks belong to James Roberts: http://jamesroberts.name/blog/2010/02/22/string-functions-for-javascript-trim-to-camel-case-to-dashed-and-to-underscore/ */
+/*Thanks belongs to James Roberts: http://jamesroberts.name/blog/2010/02/22/string-functions-for-javascript-trim-to-camel-case-to-dashed-and-to-underscore/ */
 
 String.prototype.toCamel = function () {
     return this.replace(/([-_][a-z])/g, function ($1) {
