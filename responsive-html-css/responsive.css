@@ -1,7 +1,18 @@
 * {
 	border-radius: 0;
+	font-family: Georgia, serif;
+
 }
-	
+
+a {
+	color: #01DFA5;
+	font-style: italic;
+}
+
+h6 {
+	color:#f5f5f5;
+}
+
 .panel-heading {
     background-color: #f5f5f5;
     border-color: #fffff;
