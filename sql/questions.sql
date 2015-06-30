@@ -38,14 +38,31 @@ QUESTION 1: Given the "key" value of a user's token, ensure the token has not ex
     If not, update the user's last_login value to the current date & time (UTC) and then return the applicable user row.
 
 */
+DECLARE @user_id serial
 
-
+IF(
+	SELECT COUNT(*)
+	FROM common_token
+	WHERE key=@key and expires_at > CURRENT_TIMESTAMP
+	)>0
+	
+	BEGIN
+	
+		UPDATE common_user
+		SET  last_login = CURRENT_TIMESTAMP
+		WHERE id = (SELECT @user_id = user_id
+					FROM common_token
+					WHERE key=@key
+					)
+		RETURN (SELECT * FROM common_user WHERE user_id=@user_id;)
 /*
 
 QUESTION 2: Create a query to clean up (delete) all tokens that have been expired for at 30 days or more.
 
 */
 
+DELETE FROM common_token
+WHERE expires_at <= CURRENT_TIMESTAMP-30;
 
 /*
 
@@ -53,3 +70,10 @@ QUESTION 3: Based on the preceding 2 problems, suggest indices that would maximi
     operations involved.
 
 */
+
+/*You could set an index on common_token.expires_at. The index on that column would help with cleaning up the 
+tokens table of expired tokens. Since the primary key of common_user is implicitly set already we won't need
+apply it there. I believe a case could be made for using a unique index on common_token.key. Since we are using 
+that for a lookup we want that key to be unique and that would help us with that. It would also speed up the lookup
+we do to decide what to do with the user and when we do the user id lookup from common_token. I'll be honest, I don't 
+deal a lot with setting indices so this could all be very wrong .*/
