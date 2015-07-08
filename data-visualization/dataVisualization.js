@@ -15,7 +15,8 @@
 				
 				var xScale = d3.scale.linear()
 					.domain([0, dataset.length])
-					.range([padding, w - padding]);	
+					.range([padding, w - padding])
+					.clamp(true);	
 					
 				var yScale = d3.scale.linear()
 					.domain(d3.extent(dataset, function(d) {return d.NOHS_CY; }))
@@ -33,8 +34,8 @@
 					.clamp(true);
 				
 				var xAxisScale = d3.scale.ordinal()
-					.rangeRoundBands([0, w-padding], 1)
-					.domain(dataset.map(function(d) { return d.ID; }));
+					.domain(dataset.map(function(d) { return d.ID; }))
+					.rangeBands([0, w-padding]);
 				
 				var xAxis = d3.svg.axis()
 					.scale(xAxisScale)
@@ -53,7 +54,7 @@
 						return "rect_" + d.ID; 
 					})
 				   .attr("x", function(d, i) {
-						return (i * (w / dataset.length)) + padding;
+						return (xScale(i));
 					})
 				   .attr("y", function(d) {
 						return (h - yScale(d.NOHS_CY));
