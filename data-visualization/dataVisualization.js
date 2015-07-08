@@ -33,7 +33,7 @@
 					.clamp(true);
 				
 				var xAxisScale = d3.scale.ordinal()
-					.rangeRoundBands([0, w], .05)
+					.rangeRoundBands([0, w-padding], 1)
 					.domain(dataset.map(function(d) { return d.ID; }));
 				
 				var xAxis = d3.svg.axis()
