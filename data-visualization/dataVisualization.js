@@ -1,17 +1,20 @@
 //Width and height
-			var w = 1000;
-			var h = 400;
-			var padding = 40;
-			
-			var dataset = d3.csv("data.csv");
-			
+			var w = 1250;
+			var h = 500;
+			var padding = 55;
+						
 			//Create SVG element
-			var svg = d3.select("body")
-						.append("svg")
-						.attr("width", w)
-						.attr("height", h);
+			var body = d3.select("body");
+			var slide = d3.select(".slide");
+			slide.append("text");
+			var svg = slide.append("svg")
+				.attr("width", w)
+				.attr("height", h);
 						
 			d3.csv('kc-education.csv', type, function(error, dataset) {
+				
+				//var headerNames = d3.keys(dataset[0]);
+				//headerNames = headerNames.slice(4, -2);
 				
 				var xScale = d3.scale.linear()
 					.domain([0, dataset.length])
@@ -19,33 +22,33 @@
 					.clamp(true);	
 					
 				var yScale = d3.scale.linear()
-					.domain(d3.extent(dataset, function(d) {return d.NOHS_CY; }))
+					.domain(d3.extent(dataset, function(d) {return d['EDUCBASECY']; }))
 					.range([padding, h - padding])
 					.clamp(true);
 					
 				var hScale = d3.scale.linear()
-					.domain(d3.extent(dataset, function(d) {return d.NOHS_CY; }))
+					.domain(d3.extent(dataset, function(d) {return d['EDUCBASECY']; }))
 					.range([0, h - (padding*2)])
 					.clamp(true);
 				
 				var yAxisScale = d3.scale.linear()
-					.domain(d3.extent(dataset, function(d) {return d.NOHS_CY; }))
+					.domain(d3.extent(dataset, function(d) {return d['EDUCBASECY']; }))
 					.range([h - (padding), padding])
 					.clamp(true);
 				
 				var xAxisScale = d3.scale.ordinal()
 					.domain(dataset.map(function(d) { return d.ID; }))
-					.rangeBands([0, w-padding]);
+					.rangeBands([padding, w-padding]);
 				
 				var xAxis = d3.svg.axis()
 					.scale(xAxisScale)
-					.orient("bottom")
+					.orient("bottom");
 
 				
 				var yAxis = d3.svg.axis()
 					.scale(yAxisScale)
-					.orient("left")
-
+					.orient("left");
+					
 				svg.selectAll("rect")
 				   .data(dataset)
 				   .enter()
@@ -57,16 +60,20 @@
 						return (xScale(i));
 					})
 				   .attr("y", function(d) {
-						return (h - yScale(d.NOHS_CY));
+						return (h - yScale(d['EDUCBASECY']));
 				   })
-				   .attr("width", (w-padding) / dataset.length)
+				   .attr("width", function(d, i) {
+						return (xScale(i+1) - xScale(i)-2);
+					})
 				   
 				   .attr("height", function(d) {
-						return hScale(d.NOHS_CY);
+						return hScale(d['EDUCBASECY']);
 				   })
 				   .attr("fill", function(d) {
 						return "#00B08B";
-				   });
+					});
+					//.attr("stroke", "orange")
+					//.attr("stroke-width", 3);
 
 				svg.append("g")
 					.attr("class", "axis")
@@ -75,7 +82,7 @@
 					
 				svg.append("g")
 					.attr("class", "x axis")
-					.attr("transform", "translate("+ padding + ", 360)")
+					.attr("transform", "translate(-.5," + (h - padding) + ")")
 					.call(xAxis)
 					.selectAll("text")
 					.style("text-anchor", "end")
@@ -86,6 +93,6 @@
 			});
 			
 			function type(d) {
-				d.NOHS_CY = +d.NOHS_CY; // coerce to number
+				d['EDUCBASECY'] = +d['EDUCBASECY']; // coerce to number
 				return d;
 			};
