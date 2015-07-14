@@ -5,9 +5,7 @@
 						
 			//Create SVG element
 			var body = d3.select("body");
-			var slide = d3.select(".slide");
-			slide.append("text");
-			var svg = slide.append("svg")
+			var svg = body.append("svg")
 				.attr("width", w)
 				.attr("height", h);
 						
