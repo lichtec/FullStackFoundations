@@ -52,3 +52,13 @@
         .slider-dots li.active-dot {
           color: #363636;
         }
+.bx-wrapper .bx-controls-direction a {
+	position: absolute;
+	top: 105%;
+	margin-top: -16px;
+	outline: 0px none;
+	width: 32px;
+	height: 32px;
+	text-indent: -9999px;
+	z-index: 9999;
+}
