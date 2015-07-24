@@ -1,16 +1,14 @@
 //Width and height
 			var w = 1250;
 			var h = 500;
-			var padding = 60;
+			var padding = 65;
 						
 			//Create SVG element
 			var body = d3.select("body");
 			var slider = d3.selectAll(".slider");
 			
 						
-			d3.csv('kc-education.csv', type, function(error, dataset) {
-				d3.csv('kc-education-layout.csv', type, function(error, dataset_layout) {
-				
+			d3.csv('kc-education.csv', edu_type, function(error, dataset) {				
 					var headerNames = d3.keys(dataset[0]);
 					headerNames = headerNames.slice(4, -2);
 					for(var i = 0; i < headerNames.length; i++) {
@@ -120,7 +118,6 @@
 							.style("text-decoration", "underline")
 							.text("Population");
 						}
-				});
 			});
 			
 			function edu_type(d) {
